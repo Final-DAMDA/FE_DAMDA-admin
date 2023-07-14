@@ -44,7 +44,7 @@ function ManagerLayout({
       </S.Header>
 
       {/* 활동 중 매니저 데이터 */}
-      <ActiveManager activeManagers={activeManagers?.content} />
+      <ActiveManager />
       <PaginationContainer>
         <Pagination
           hideFirstLastPages={true}

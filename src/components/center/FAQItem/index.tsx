@@ -7,52 +7,55 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 
 interface FAQItemProps {
-  qnaId: number;
-  title: string;
-  qnaCategory: string;
   index: number;
-  mutate: UseMutateFunction<boolean, AxiosError, number>;
+  id: number;
+  title: string;
+  type: string;
+  contents?: string;
+  deleteFAQHandler: (id: number) => void;
 }
 
-function FAQItem({ qnaId, title, qnaCategory, mutate, index }: FAQItemProps) {
+function FAQItem({ id, index, title, type, contents, deleteFAQHandler }: FAQItemProps) {
   const [isFaqClicked, setIsFaqClicked] = useState(false);
   const router = useRouter();
 
-  const deleteFAQHandler = (id: number) => {
-    mutate(id);
-  };
+  // const deleteFAQHandler = (id: number) => {
+  //   mutate(id);
+  // };
 
-  let transformedCategory;
-  switch (qnaCategory) {
-    case 'PRICE':
-      transformedCategory = '가격';
-      break;
+  // let transformedCategory;
+  // switch (qnaCategory) {
+  //   case 'PRICE':
+  //     transformedCategory = '가격';
+  //     break;
 
-    case 'SERVICE':
-      transformedCategory = '서비스 관련';
-      break;
+  //   case 'SERVICE':
+  //     transformedCategory = '서비스 관련';
+  //     break;
 
-    case 'ETC':
-      transformedCategory = '기타';
-      break;
+  //   case 'ETC':
+  //     transformedCategory = '기타';
+  //     break;
 
-    default:
-      break;
-  }
+  //   default:
+  //     break;
+  // }
 
   return (
     <>
       <G.Tr onDoubleClick={() => setIsFaqClicked(true)}>
         <G.Td>{index + 1}</G.Td>
         <G.Td>{title}</G.Td>
-        <G.Td>{transformedCategory}</G.Td>
+        <G.Td>{type}</G.Td>
         <G.Td>
-          <StateButton state="red" onClick={() => deleteFAQHandler(qnaId)}>
+          <StateButton state="red" onClick={() => deleteFAQHandler(id)}>
             삭제
           </StateButton>
         </G.Td>
       </G.Tr>
-      {isFaqClicked && <Modal faq="faq" qnaId={qnaId} setIsFaqClicked={setIsFaqClicked} />}
+      {isFaqClicked && (
+        <Modal faq="faq" id={id} title={title} type={type} contents={contents} setIsFaqClicked={setIsFaqClicked} />
+      )}
     </>
   );
 }

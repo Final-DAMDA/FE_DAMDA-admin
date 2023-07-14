@@ -8,22 +8,23 @@ import * as S from '@/styles/pages/center.style';
 import { AxiosError } from 'axios';
 
 function CenterPage() {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const { data: faqResponse } = useQuery({
-    queryKey: ['faq'],
-    queryFn: getCenterData,
-  });
+  // const { data: faqResponse } = useQuery({
+  //   queryKey: ['faq'],
+  //   queryFn: getCenterData,
+  // });
 
-  const { mutate } = useMutation<boolean, AxiosError, number>(deleteFAQData, {
-    onSuccess() {
-      queryClient.invalidateQueries(['faq']);
-    },
-  });
+  // const { mutate } = useMutation<boolean, AxiosError, number>(deleteFAQData, {
+  //   onSuccess() {
+  //     queryClient.invalidateQueries(['faq']);
+  //   },
+  // });
 
-  if (!faqResponse || faqResponse.length < 1) return <>Not Found Center Data</>;
+  // if (!faqResponse || faqResponse.length < 1) return <>Not Found Center Data</>;
 
-  return <CenterLayout faqResponse={faqResponse.data} mutate={mutate} />;
+  // return <CenterLayout faqResponse={faqResponse.data} mutate={mutate} />;
+  return <CenterLayout />;
 }
 
 export default CenterPage;

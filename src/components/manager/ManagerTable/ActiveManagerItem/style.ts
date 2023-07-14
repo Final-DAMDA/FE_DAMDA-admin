@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 export const ManagerTd = styled(Td)`
   position: relative;
   padding: 0 12px;
+  text-align: left;
 
   &.location-group {
     display: flex;

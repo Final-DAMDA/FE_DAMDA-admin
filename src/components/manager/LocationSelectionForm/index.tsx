@@ -30,32 +30,32 @@ function LocationSelectionForm({ region, id }: any) {
     setSelectedRegion(e.target.value);
   };
 
-  const cityChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const district = e.target.value;
-    const isChecked = e.target.checked;
+  // const cityChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const district = e.target.value;
+  //   const isChecked = e.target.checked;
 
-    if (isChecked) {
-      if (selectedRegion === '서울특별시') {
-        mutate({ id, region: { SEOUL: district } });
-      } else if (selectedRegion === '경기도') {
-        mutate({ id, region: { GYEONGGI: district } });
-      }
-    } else {
-      // const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+  //   if (isChecked) {
+  //     if (selectedRegion === '서울특별시') {
+  //       mutate({ id, region: { SEOUL: district } });
+  //     } else if (selectedRegion === '경기도') {
+  //       mutate({ id, region: { GYEONGGI: district } });
+  //     }
+  //   } else {
+  //     // const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
 
-      const checkedCount = region.서울특별시.length + region.경기도.length;
+  //     const checkedCount = region.서울특별시.length + region.경기도.length;
 
-      if (checkedCount > 0) {
-        if (selectedRegion === '서울특별시') {
-          deleteRegion({ id, region: { SEOUL: district } });
-        } else if (selectedRegion === '경기도') {
-          deleteRegion({ id, region: { GYEONGGI: district } });
-        }
-      } else {
-        e.target.checked = true;
-      }
-    }
-  };
+  //     if (checkedCount > 0) {
+  //       if (selectedRegion === '서울특별시') {
+  //         deleteRegion({ id, region: { SEOUL: district } });
+  //       } else if (selectedRegion === '경기도') {
+  //         deleteRegion({ id, region: { GYEONGGI: district } });
+  //       }
+  //     } else {
+  //       e.target.checked = true;
+  //     }
+  //   }
+  // };
 
   // 지역 태그
   const seoul = region?.서울특별시.map((seoul: string, index: number) => <div key={index}>서울 {seoul}</div>);
@@ -134,9 +134,9 @@ function LocationSelectionForm({ region, id }: any) {
                       name="manager_available_district"
                       id={district}
                       value={district}
-                      checked={region[selectedRegion].includes(district)}
+                      // checked={region[selectedRegion].includes(district)}
                       onClick={(e) => e.stopPropagation()}
-                      onChange={cityChangeHandler}
+                      // onChange={cityChangeHandler}
                       ref={cityCheckboxRef}
                     />
                     <label htmlFor={district}>{district}</label>

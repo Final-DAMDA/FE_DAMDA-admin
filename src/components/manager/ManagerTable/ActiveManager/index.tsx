@@ -5,20 +5,24 @@ import ActiveManagerItem from '../ActiveManagerItem';
 import * as G from '@/styles/common/table.style';
 import * as M from '../style';
 import { ManagerType } from '@/types/manager';
+import { managerDummyData } from '@/constants/managerDummyData';
+import { ManagerDummyDataType } from '@/types/managerDummyData';
 
-interface ActiveManagerProps {
-  activeManagers: ManagerType[];
-}
+// interface ActiveManagerProps {
+//   activeManagers: ManagerType[];
+// }
 
-function ActiveManager({ activeManagers }: ActiveManagerProps) {
+function ActiveManager() {
   return (
     <M.ManagerTableContainer>
       <G.Table>
         <colgroup>
           <col width="5%" />
-          <col width="11%" />
-          <col width="14%" />
-          <col width="1%" />
+          <col width="15%" />
+          <col width="30%" />
+          <col width="15%" />
+          <col width="15%" />
+          <col width="10%" />
         </colgroup>
 
         <G.Thead>
@@ -57,8 +61,11 @@ function ActiveManager({ activeManagers }: ActiveManagerProps) {
         </G.Thead>
 
         <tbody>
-          {activeManagers?.map((activeManager: ManagerType) => (
+          {/* {activeManagers?.map((activeManager: ManagerType) => (
             <ActiveManagerItem key={activeManager.id} activeManager={activeManager} />
+          ))} */}
+          {managerDummyData.map((data: ManagerDummyDataType, index: number) => (
+            <ActiveManagerItem key={index} activeManager={data} />
           ))}
         </tbody>
       </G.Table>

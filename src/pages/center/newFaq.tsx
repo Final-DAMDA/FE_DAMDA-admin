@@ -7,15 +7,16 @@ import { FAQData } from '@/types/api/center';
 import NewFaqLayout from '@/components/center/NewFaqLayout';
 
 function NewFaqPage() {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const { mutate } = useMutation<boolean, AxiosError, FAQData>(postFAQData, {
-    onSuccess() {
-      queryClient.invalidateQueries(['faq']);
-    },
-  });
+  // const { mutate } = useMutation<boolean, AxiosError, FAQData>(postFAQData, {
+  //   onSuccess() {
+  //     queryClient.invalidateQueries(['faq']);
+  //   },
+  // });
 
-  return <NewFaqLayout mutate={mutate} />;
+  // return <NewFaqLayout mutate={mutate} />;
+  return <NewFaqLayout />;
 }
 
 export default NewFaqPage;

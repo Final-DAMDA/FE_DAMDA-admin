@@ -12,7 +12,10 @@ import * as S from './style';
 import { FAQData } from '@/types/api/center';
 
 interface ModalProps {
+  id?: number;
+  type?: string;
   title?: string;
+  contents?: string;
   description?: string;
   qnaId?: number;
   faq?: string;
@@ -22,7 +25,10 @@ interface ModalProps {
 }
 
 function Modal({
+  id,
+  type,
   title,
+  contents,
   description,
   qnaId,
   faq,
@@ -72,7 +78,7 @@ function Modal({
 
   let transformedCategory;
   if (faq) {
-    switch (singleFAQ?.data.qnaCategory) {
+    switch (type) {
       case 'PRICE':
         transformedCategory = '가격';
         break;
@@ -105,17 +111,17 @@ function Modal({
           break;
 
         default:
-          transformedCategory = singleFAQ?.data.qnaCategory;
+          transformedCategory = type;
           break;
       }
 
-      const formData = {
-        title: data.title,
-        qnaCategory: transformedCategory,
-        contents: data.contents,
-      };
-      console.log(formData);
-      mutate({ id: qnaId, faq: formData });
+      // const formData = {
+      //   title: data.title,
+      //   qnaCategory: transformedCategory,
+      //   contents: data.contents,
+      // };
+      // console.log(formData);
+      // mutate({ id: qnaId, faq: formData });
     };
 
     return (
@@ -139,7 +145,7 @@ function Modal({
                         className="title"
                         type="text"
                         {...register('title', { required: true })}
-                        defaultValue={singleFAQ?.data.title}
+                        defaultValue={title}
                         autoFocus
                       />
                     ) : (
@@ -154,11 +160,12 @@ function Modal({
                     {isInputEditing ? (
                       <N.FormWrapper size="small">
                         <CategoryDropdown
+                          defaultType={type}
                           size="small"
                           isDropdownOpen={isDropdownOpen}
                           setIsDropdownOpen={setIsDropdownOpen}
                           selectedCategory={selectedCategory}
-                          qnaCategory={singleFAQ.data.qnaCategory}
+                          qnaCategory={type}
                           selectHandler={selectHandler}
                         />
                       </N.FormWrapper>
@@ -175,7 +182,7 @@ function Modal({
                       <textarea
                         className="contents"
                         {...register('contents', { required: true })}
-                        defaultValue={singleFAQ?.data.contents}
+                        defaultValue={contents}
                       ></textarea>
                     ) : (
                       singleFAQ?.data.contents
@@ -197,28 +204,18 @@ function Modal({
                 <div>
                   <dt>제목</dt>
                   <dd>
-                    {isInputEditing ? (
-                      <input type="text" defaultValue={singleFAQ?.data.title} autoFocus />
-                    ) : (
-                      singleFAQ?.data.title
-                    )}
+                    {isInputEditing ? <input type="text" defaultValue={singleFAQ?.data.title} autoFocus /> : title}
                   </dd>
                 </div>
 
                 <div>
                   <dt>유형</dt>
-                  <dd>{isInputEditing ? selectedCategory : transformedCategory}</dd>
+                  <dd>{isInputEditing ? selectedCategory : type}</dd>
                 </div>
 
                 <div>
-                  <dt>내용</dt>
-                  <dd>
-                    {isInputEditing ? (
-                      <textarea defaultValue={singleFAQ?.data.contents}></textarea>
-                    ) : (
-                      singleFAQ?.data.contents
-                    )}
-                  </dd>
+                  <dt style={{ whiteSpace: 'nowrap' }}>내용</dt>
+                  <dd>{isInputEditing ? <textarea defaultValue={contents}></textarea> : contents}</dd>
                 </div>
               </S.Info>
 

@@ -14,3 +14,10 @@ export interface FAQData {
 export interface FAQResponse extends FAQData {
   qnaId: number;
 }
+
+export interface CenterDataDummy {
+  id: number;
+  contents?: string;
+  title: string;
+  type: string;
+}

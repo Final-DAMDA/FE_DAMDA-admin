@@ -10,11 +10,11 @@ import CategoryDropdown from '../CategoryDropdown';
 
 import * as S from './style';
 
-interface NewFaqLayoutProps {
-  mutate: UseMutateFunction<boolean, AxiosError, FAQData>;
-}
+// interface NewFaqLayoutProps {
+//   mutate: UseMutateFunction<boolean, AxiosError, FAQData>;
+// }
 
-function NewFaqLayout({ mutate }: NewFaqLayoutProps) {
+function NewFaqLayout() {
   const {
     register,
     handleSubmit,
@@ -68,7 +68,7 @@ function NewFaqLayout({ mutate }: NewFaqLayoutProps) {
       qnaCategory: transformedCategory,
       contents: data.contents,
     };
-    mutate(formData);
+    // mutate(formData);
 
     // api 요청 작성
     router.push('/center');

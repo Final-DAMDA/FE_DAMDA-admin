@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { CenterData, FAQResponse } from '@/types/api/center';
+import { customerCenterDummyData } from '@/constants/customerCenterDummyData';
+import { CenterData, CenterDataDummy, FAQResponse } from '@/types/api/center';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
@@ -9,12 +10,19 @@ import FAQItem from '../FAQItem';
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
 
-interface CenterLayoutProps {
-  faqResponse: CenterData[];
-  mutate: UseMutateFunction<boolean, AxiosError, number>;
-}
+// interface CenterLayoutProps {
+//   faqResponse: CenterData[];
+//   mutate: UseMutateFunction<boolean, AxiosError, number>;
+// }
 
-function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
+function CenterLayout() {
+  const [data, setData] = useState(customerCenterDummyData);
+
+  const deleteFAQHandler = (id: number) => {
+    const newData = data.filter((dummyData) => dummyData.id !== id);
+    setData(newData);
+  };
+
   return (
     <div>
       <S.Title>고객 센터</S.Title>
@@ -35,7 +43,7 @@ function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
           </thead>
 
           <G.Tbody>
-            {faqResponse?.map((item: FAQResponse, index: number) => (
+            {/* {faqResponse?.map((item: FAQResponse, index: number) => (
               <FAQItem
                 key={item.qnaId}
                 index={index}
@@ -44,7 +52,20 @@ function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
                 qnaCategory={item.qnaCategory}
                 mutate={mutate}
               />
-            ))}
+            ))} */}
+            {data.map((data: CenterDataDummy, index: number) => {
+              return (
+                <FAQItem
+                  key={data.id}
+                  id={data.id}
+                  contents={data.contents}
+                  index={index}
+                  title={data.title}
+                  type={data.type}
+                  deleteFAQHandler={deleteFAQHandler}
+                />
+              );
+            })}
           </G.Tbody>
         </G.Table>
       </G.TableContainer>

@@ -9,38 +9,44 @@ import * as G from '@/styles/common/table.style';
 import { StateButton } from '@/styles/common/StateButton';
 import * as S from './style';
 import ManagerSupportForm from '../../ManagerSupportForm';
+import { ManagerDummyDataType } from '@/types/managerDummyData';
 
-function ManagerItem({ data }: any) {
-  const {
-    id,
-    managerName,
-    managerPhoneNumber,
-    region,
-    certificateStatus,
-    certificateStatusEtc,
-    level,
-    vehicle,
-    fieldExperience,
-    mainJobStatus,
-    mainJobStatusEtc,
-    memo,
-    currManagerStatus,
-  } = data;
-  const formData = {
-    id,
-    managerName,
-    managerPhoneNumber,
-    region,
-    certificateStatus,
-    certificateStatusEtc,
-    level,
-    vehicle,
-    fieldExperience,
-    mainJobStatus,
-    mainJobStatusEtc,
-    memo,
-    currManagerStatus,
-  };
+interface ManagerItemProps {
+  data: ManagerDummyDataType;
+}
+
+function ManagerItem({ data }: ManagerItemProps) {
+  // const {
+  //   id,
+  //   managerName,
+  //   managerPhoneNumber,
+  //   region,
+  //   certificateStatus,
+  //   certificateStatusEtc,
+  //   level,
+  //   vehicle,
+  //   fieldExperience,
+  //   mainJobStatus,
+  //   mainJobStatusEtc,
+  //   memo,
+  //   currManagerStatus,
+  // } = data;
+  // const formData = {
+  //   id,
+  //   managerName,
+  //   managerPhoneNumber,
+  //   region,
+  //   certificateStatus,
+  //   certificateStatusEtc,
+  //   level,
+  //   vehicle,
+  //   fieldExperience,
+  //   mainJobStatus,
+  //   mainJobStatusEtc,
+  //   memo,
+  //   currManagerStatus,
+  // };
+  const { name, phoneNumber, activityRegion, level, certificate, vehicle, status } = data;
 
   const queryClient = useQueryClient();
 
@@ -65,7 +71,7 @@ function ManagerItem({ data }: any) {
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [isEditingLevel, setIsEditingLevel] = useState(false);
 
-  const [inputValue, setInputValue] = useState(certificateStatusEtc);
+  // const [inputValue, setInputValue] = useState(certificateStatusEtc);
 
   const { mutate: statusHandler } = useMutation(putManagerStatus, {
     onSuccess() {
@@ -78,12 +84,12 @@ function ManagerItem({ data }: any) {
 
   // --------- 활동 지역 외 ---------
   const nameBlurHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    mutate({ id, formData: { ...formData, managerName: e.target.value } });
+    // mutate({ id, formData: { ...formData, managerName: e.target.value } });
     setIsEditingName(false);
   };
 
   const phoneBlurHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    mutate({ id, formData: { ...formData, managerPhoneNumber: e.target.value } });
+    // mutate({ id, formData: { ...formData, managerPhoneNumber: e.target.value } });
     setIsEditingPhone(false);
   };
 
@@ -121,15 +127,15 @@ function ManagerItem({ data }: any) {
         break;
     }
 
-    mutate({
-      id,
-      formData: { ...formData, certificateStatus: transformedValue, certificateStatusEtc: null },
-    });
+    // mutate({
+    //   id,
+    //   formData: { ...formData, certificateStatus: transformedValue, certificateStatusEtc: null },
+    // });
   };
 
   const vehicleChangeHandler = () => {
-    mutate({ id, formData: { ...formData, vehicle: vehicle ? false : true } });
-    setIsVehicleOpen(false);
+    // mutate({ id, formData: { ...formData, vehicle: vehicle ? false : true } });
+    // setIsVehicleOpen(false);
   };
 
   const stateChangeHandler = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -155,17 +161,17 @@ function ManagerItem({ data }: any) {
     }
 
     console.log(value);
-    statusHandler({ id, status: { currManagerStatus: value } });
+    // statusHandler({ id, status: { currManagerStatus: value } });
     setIsStatusOpen(false);
   };
 
   const etcSubmitHandler = () => {
-    mutate({ id, formData: { ...formData, certificateStatus: 'ETC', certificateStatusEtc: inputValue } });
+    // mutate({ id, formData: { ...formData, certificateStatus: 'ETC', certificateStatusEtc: inputValue } });
   };
 
   let statusText;
   let stateChangeButtons;
-  switch (data.currManagerStatus) {
+  switch (status) {
     case 'WAITING':
       statusText = '대기';
       stateChangeButtons = (
@@ -220,57 +226,57 @@ function ManagerItem({ data }: any) {
     default:
   }
 
-  let transformedStatus;
-  if (certificateStatus === 'ETC') {
-    transformedStatus = certificateStatusEtc;
-  } else {
-    switch (certificateStatus) {
-      case 'FIRST_RATE_OFF':
-        transformedStatus = '1급 (off)';
-        break;
+  // let transformedStatus;
+  // if (status === 'ETC') {
+  //   transformedStatus = certificateStatusEtc;
+  // } else {
+  //   switch (certificateStatus) {
+  //     case 'FIRST_RATE_OFF':
+  //       transformedStatus = '1급 (off)';
+  //       break;
 
-      case 'SECOND_RATE_OFF':
-        transformedStatus = '2급 (off)';
-        break;
+  //     case 'SECOND_RATE_OFF':
+  //       transformedStatus = '2급 (off)';
+  //       break;
 
-      case 'FIRST_RATE_ON':
-        transformedStatus = '1급 (on)';
-        break;
+  //     case 'FIRST_RATE_ON':
+  //       transformedStatus = '1급 (on)';
+  //       break;
 
-      case 'SECOND_RATE_ON':
-        transformedStatus = '2급 (on)';
-        break;
+  //     case 'SECOND_RATE_ON':
+  //       transformedStatus = '2급 (on)';
+  //       break;
 
-      case 'NONE':
-        transformedStatus = '없음';
-        break;
+  //     case 'NONE':
+  //       transformedStatus = '없음';
+  //       break;
 
-      default:
-        break;
-    }
-  }
+  //     default:
+  //       break;
+  //   }
+  // }
 
-  let transformedPhoneNumber;
-  switch (managerPhoneNumber?.length) {
-    case 10:
-      transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-      break;
+  // let transformedPhoneNumber;
+  // switch (managerPhoneNumber?.length) {
+  //   case 10:
+  //     transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+  //     break;
 
-    case 11:
-      transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-      break;
+  //   case 11:
+  //     transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  //     break;
 
-    default:
-      break;
-  }
+  //   default:
+  //     break;
+  // }
 
   const selectLevelHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    mutate({ id, formData: { ...formData, level: e.currentTarget.innerText } });
+    // mutate({ id, formData: { ...formData, level: e.currentTarget.innerText } });
     setIsEditingLevel(false);
   };
 
   const memoBlurHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    mutate({ id, formData: { ...formData, memo: e.target.value } });
+    // mutate({ id, formData: { ...formData, memo: e.target.value } });
     setIsMemoOpen(false);
   };
 
@@ -284,33 +290,26 @@ function ManagerItem({ data }: any) {
   return (
     <G.Tr>
       <S.ManagerTd onClick={() => setIsEditingName(true)}>
-        {isEditingName ? (
-          <input autoFocus type="text" onBlur={nameBlurHandler} defaultValue={managerName} />
-        ) : (
-          managerName
-        )}
+        {isEditingName ? <input autoFocus type="text" onBlur={nameBlurHandler} defaultValue={name} /> : name}
       </S.ManagerTd>
 
       <S.ManagerTd onClick={() => setIsEditingPhone(true)} onBlur={() => setIsEditingPhone(false)}>
         {isEditingPhone ? (
-          <input autoFocus type="text" onBlur={phoneBlurHandler} defaultValue={managerPhoneNumber} />
+          <input autoFocus type="text" onBlur={phoneBlurHandler} defaultValue={phoneNumber} />
         ) : (
-          transformedPhoneNumber
+          phoneNumber
         )}
       </S.ManagerTd>
 
       <S.ManagerTd className="location-group" style={{ position: 'relative' }} onClick={locationOpenHandler}>
         {/* 지역 데이터 */}
-        {region.서울특별시.map((seoul: string, index: number) => (
-          <span key={index}>서울 {seoul}</span>
+        {activityRegion.map((region: string, index: number) => (
+          <span key={index}>{region}</span>
         ))}
-        {region.경기도.map((gyeonggi: string, index: number) => (
-          <span key={index}>경기 {gyeonggi}</span>
-        ))}
-        {isLocationOpen && <LocationSelectionForm region={region} id={id} formData={formData} />}
+        {isLocationOpen && <LocationSelectionForm />}
       </S.ManagerTd>
 
-      <S.ManagerTd onClick={() => setIsEditingLevel(!isEditingLevel)}>
+      <S.ManagerTd style={{ textAlign: 'left' }} onClick={() => setIsEditingLevel(!isEditingLevel)}>
         {level}
         {isEditingLevel && (
           <S.CertificateForm size="small">
@@ -352,8 +351,11 @@ function ManagerItem({ data }: any) {
         {/* {isEditingLevel ? <input autoFocus type="text" onBlur={levelBlurHandler} defaultValue={level} /> : level} */}
       </S.ManagerTd>
 
-      <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsCertificateOpen(!isCertificateOpen)}>
-        {transformedStatus}
+      <S.ManagerTd
+        style={{ position: 'relative', textAlign: 'left' }}
+        onClick={() => setIsCertificateOpen(!isCertificateOpen)}
+      >
+        {certificate}
 
         {isCertificateOpen && (
           <S.CertificateForm>
@@ -406,10 +408,10 @@ function ManagerItem({ data }: any) {
                 <S.InputWrapper>
                   <input
                     type="text"
-                    defaultValue={certificateStatusEtc}
+                    // defaultValue={certificateStatusEtc}
                     autoFocus
                     placeholder="자격증 이름"
-                    onChange={(e) => setInputValue(e.target.value)}
+                    // onChange={(e) => setInputValue(e.target.value)}
                     onClick={(e) => {
                       e.stopPropagation();
                       setIsCertificateOpen(true);
@@ -443,23 +445,23 @@ function ManagerItem({ data }: any) {
       <S.ManagerTd>
         <StateButton state={'blue'} onClick={() => setIsFormOpen(true)}>
           지원폼
-          {isFormOpen && <ManagerSupportForm id={id} setIsFormOpen={setIsFormOpen} />}
+          {/* {isFormOpen && <ManagerSupportForm id={id} setIsFormOpen={setIsFormOpen} />} */}
         </StateButton>
       </S.ManagerTd>
 
       <S.ManagerTd>
         <StateButton state={'blue'} onClick={() => setIsHistoryOpen(true)}>
           예약 내역
-          {isHistoryOpen && <History type="MANAGER" userId={id} username={managerName} setIsOpen={setIsHistoryOpen} />}
+          {/* {isHistoryOpen && <History type="MANAGER" userId={id} username={name} setIsOpen={setIsHistoryOpen} />} */}
         </StateButton>
       </S.ManagerTd>
 
       <S.ManagerTd style={{ position: 'relative' }}>
         <StateButton
-          state={data.managerStatus === '대기' ? 'purple' : data.managerStatus === '보류' ? 'orange' : 'red'}
+          state={status === '대기' ? 'purple' : status === '보류' ? 'orange' : 'red'}
           onClick={() => setIsStatusOpen(!isStatusOpen)}
         >
-          {statusText}
+          {status}
         </StateButton>
 
         {isStatusOpen && stateChangeButtons}
@@ -468,9 +470,7 @@ function ManagerItem({ data }: any) {
       <S.ManagerTd onMouseEnter={() => setIsMemoOpen(true)}>
         <StateButton state={'blue'}>메모</StateButton>
 
-        {isMemoOpen && (
-          <textarea autoFocus={isMemoOpen} name="" id="" defaultValue={memo} onBlur={memoBlurHandler}></textarea>
-        )}
+        {isMemoOpen && <textarea autoFocus={isMemoOpen} name="" id="" onBlur={memoBlurHandler}></textarea>}
       </S.ManagerTd>
     </G.Tr>
   );
